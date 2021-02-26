@@ -22,13 +22,18 @@ document.getElementById('mail').addEventListener('input', function() {
 
 //validan CEP
 
-function limpa_formulário_cep() {
+function limpa_formulário() {
     //Limpa valores do formulário de cep.
+    document.getElementById('nome').value=("");
+    document.getElementById('mail').value=("");
+    document.getElementById('tel').value=("");
+    document.getElementById('idade').value=("");
+    document.getElementById('conteudo').value=(""); 
+    document.getElementById('cep').value=("");
     document.getElementById('rua').value=("");
     document.getElementById('bairro').value=("");
     document.getElementById('cidade').value=("");
     document.getElementById('uf').value=("");
-    document.getElementById('ibge').value=("");
 }
 
 function meu_callback(conteudo) {
@@ -38,7 +43,7 @@ if (!("erro" in conteudo)) {
     document.getElementById('bairro').value=(conteudo.bairro);
     document.getElementById('cidade').value=(conteudo.localidade);
     document.getElementById('uf').value=(conteudo.uf);
-    document.getElementById('ibge').value=(conteudo.ibge);
+    
 } //end if.
 else {
     //CEP não Encontrado.
@@ -61,7 +66,7 @@ if (cep != "") {
     //Valida o formato do CEP.
     if(validacep.test(cep)) {
 
-        //Preenche os campos com "..." enquanto consulta webservice.
+        //Preenche os campos com "..." enquanto consulta webservice.        
         document.getElementById('rua').value="...";
         document.getElementById('bairro').value="...";
         document.getElementById('cidade').value="...";
@@ -104,35 +109,26 @@ myForm.addEventListener("submit", (e) => {
     //console.log(tel.value);
     //console.log(idade.value);
     //console.log(conteudo.value);
-    function persoas(nome, mail, tel, idade, conteudo) {
+    function persoas(nome, mail, tel, idade, conteudo, cep, rua, bairro, cidade, uf) {
         this.nome = nome;        
         this.mail = mail;
         this.tel = tel;
         this.idade = idade;
         this.conteudo = conteudo;
+        this.cep = cep;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.uf = uf;
     }
     const voce = new persoas(nome.value, mail.value, tel.value, idade.value, conteudo.value);
     
     console.log("Tabla Formulario");
     console.table(voce);
     pessoas.push(voce);
-
     console.log(pessoas);
-
-    let text = document.createTextNode(`${nome.value} tem ${mail.value} mail tem ${idade.value} idade`);
-       
-    resultado.appendChild(text);
-
-    let linebreak = document.createElement('br');
-    resultado.appendChild(linebreak);
-
-    nome.value = '';
-    mail.value = '';
-    tel.value = '';
-    idade.value = '';
-    conteudo.value = '';
-
-   
+    
+    limpa_formulário_cep(); 
    
     
     
